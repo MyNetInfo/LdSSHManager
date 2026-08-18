@@ -17,7 +17,7 @@ Session tree · Multi-tab terminal · Quick commands · SFTP · Cloud sync · Va
 [![Wails](https://img.shields.io/badge/Wails-v2-9cf)](#)
 [![Vue](https://img.shields.io/badge/Vue-3-42b883)](#)
 [![Go](https://img.shields.io/badge/Go-1.25+-00ADD8)](#)
-[![License](https://img.shields.io/badge/License-TBD-lightgrey)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 [Features](#-core-features) · [Screenshots](#-screenshots) · [Why It's Safe](#-why-you-can-trust-it-open-source--security) · [Download & Install](#-download--install) · [Build & Development](#-build--development) · [Feedback](#-feedback)
 
@@ -271,7 +271,7 @@ See [Build & Development](#-build--development) and the source layout. Key UI co
 
 ## 📄 License
 
-The open-source license for this repository is described in the [`LICENSE`](LICENSE) file.
+This project is licensed under the **MIT License** — see the [`LICENSE`](LICENSE) file (Copyright © 2026 MyNetInfo).
 
 > ⚠️ This project is provided "as is". Open source means transparency and auditability — please evaluate risks and comply with local laws before use.
 

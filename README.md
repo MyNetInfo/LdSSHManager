@@ -17,7 +17,7 @@
 [![Wails](https://img.shields.io/badge/Wails-v2-9cf)](#)
 [![Vue](https://img.shields.io/badge/Vue-3-42b883)](#)
 [![Go](https://img.shields.io/badge/Go-1.25+-00ADD8)](#)
-[![License](https://img.shields.io/badge/License-TBD-lightgrey)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 [功能特性](#-核心特性) · [界面预览](#-界面预览) · [安全机制](#-安全有保证为什么可以放心用) · [下载安装](#-下载安装) · [构建开发](#-构建开发) · [问题反馈](#-问题反馈)
 
@@ -270,7 +270,7 @@ MAKE.bat
 
 ## 📄 License
 
-本仓库的开源协议详见 [`LICENSE`](LICENSE) 文件。
+本项目采用 **MIT License** 开源协议，详见 [`LICENSE`](LICENSE) 文件（Copyright © 2026 MyNetInfo）。
 
 > ⚠️ 本项目代码以"现状"提供；开源意味着透明可审计，使用前请自行评估并按当地法律法规合规使用。
 
