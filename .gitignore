@@ -4,3 +4,4 @@
 /___docs___
 /go.sum
 /msix/*.msix
+/msix/
