@@ -25,7 +25,7 @@ jobs:
           - os: ubuntu-latest
             label: linux
             build_platform: linux/amd64
-            extra_flags: ""
+            extra_flags: -tags webkit2_41
             out_bin: build/bin/LdSSHManager
             out_installer_glob: ""
             portable_name: LdSSHManager-linux-x64
@@ -67,7 +67,7 @@ jobs:
         shell: bash
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential pkg-config libgtk-3-dev libwebkit2gtk-4.0-dev
+          sudo apt-get install -y build-essential pkg-config libgtk-3-dev libwebkit2gtk-4.1-dev
 
       # Windows: go-sqlcipher 是 CGO 驱动, 需要 gcc
       - name: Install GCC (MSYS2 + MinGW-w64)

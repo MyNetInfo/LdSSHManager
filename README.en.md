@@ -173,7 +173,7 @@ The full source is public at <https://github.com/MyNetInfo/LdSSHManager>. You ca
 
 - **OS**:
   - **Windows** 10 / 11 (x64)
-  - **Linux** x64 (requires GTK3, WebKit2GTK 4.0 and other desktop deps; e.g. `sudo apt install libgtk-3-dev libwebkit2gtk-4.0-dev`)
+  - **Linux** x64 (requires GTK3, WebKit2GTK 4.1 and other desktop deps; e.g. `sudo apt install libgtk-3-dev libwebkit2gtk-4.1-dev`)
   - **macOS** Apple Silicon (M-series, macOS 12+) and Intel (macOS 12+); unsigned — first launch: right-click → Open
 - **WebView2 Runtime**: Windows only — pre-installed on Win11; the **installer** embeds it for Win10; the portable build prompts to install it once on first launch
 - **Screen resolution**: ≥ 1280×720 recommended
