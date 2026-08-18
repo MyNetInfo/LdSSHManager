@@ -3,3 +3,4 @@
 /MAKE.sh
 /___docs___
 /go.sum
+/msix/*.msix
