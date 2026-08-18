@@ -67,7 +67,7 @@ jobs:
         shell: bash
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential pkg-config libgtk-3-dev libwebkit2gtk-4.1-dev
+          sudo apt-get install -y build-essential pkg-config libgtk-3-dev libwebkit2gtk-4.0-dev
 
       # Windows: go-sqlcipher 是 CGO 驱动, 需要 gcc
       - name: Install GCC (MSYS2 + MinGW-w64)

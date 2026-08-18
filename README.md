@@ -173,7 +173,7 @@
 
 - **操作系统**：
   - **Windows** 10 / 11（x64）
-  - **Linux** x64（需 GTK3、WebKit2GTK 4.1 等桌面依赖；主流发行版可 `sudo apt install libgtk-3-dev libwebkit2gtk-4.1-dev` 等）
+  - **Linux** x64（需 GTK3、WebKit2GTK 4.0 等桌面依赖；主流发行版可 `sudo apt install libgtk-3-dev libwebkit2gtk-4.0-dev` 等）
   - **macOS** Apple Silicon（M 系列，macOS 12+）与 Intel（macOS 12+）；未签名，首次运行需右键 → 打开
 - **WebView2 Runtime**：仅 Windows 需要——Win11 已预装；Win10 使用**安装版**已内嵌，便携版首次启动按提示安装一次即可
 - **屏幕分辨率**：建议 ≥ 1280×720
