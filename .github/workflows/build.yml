@@ -106,7 +106,7 @@ jobs:
         shell: bash
         env:
           CGO_ENABLED: "1"
-        run: wails build -platform ${{ matrix.build_platform }} ${{ matrix.extra_flags }}
+        run: wails build -platform ${{ matrix.build_platform }} ${{ matrix.extra_flags }} -icon build/appicon.png
 
       - name: Collect artifacts
         shell: bash
