@@ -33,7 +33,7 @@ jobs:
           - os: macos-latest
             label: macos
             build_platform: darwin/arm64
-            extra_flags: -dmg
+            extra_flags: ""
             out_bin: ""
             out_installer_glob: ""
             portable_name: LdSSHManager-macos-arm64.dmg
@@ -41,7 +41,7 @@ jobs:
           - os: macos-13
             label: macos-intel
             build_platform: darwin/amd64
-            extra_flags: -dmg
+            extra_flags: ""
             out_bin: ""
             out_installer_glob: ""
             portable_name: LdSSHManager-macos-x64.dmg
@@ -112,12 +112,16 @@ jobs:
         shell: bash
         run: |
           mkdir -p artifacts
-          # macOS: 优先 dmg, 兜底 zip 打包 .app (arm64 / intel 各自独立产物)
+          # macOS: wails 产出 .app, 用 hdiutil 制作 dmg; 失败则兜底 zip 打包 .app
           if [[ "${{ matrix.label }}" == macos* ]]; then
-            if [ -f "build/bin/LdSSHManager.dmg" ]; then
-              cp "build/bin/LdSSHManager.dmg" "artifacts/${{ matrix.portable_name }}"
-            elif [ -d "build/bin/LdSSHManager.app" ]; then
-              (cd build/bin && zip -qr "../../artifacts/LdSSHManager-${{ matrix.label }}.zip" LdSSHManager.app)
+            if [ -d "build/bin/LdSSHManager.app" ]; then
+              hdiutil create -volname "LdSSHManager" -srcfolder build/bin/LdSSHManager.app -ov -format UDZO "artifacts/${{ matrix.portable_name }}"
+              if [ -f "artifacts/${{ matrix.portable_name }}" ]; then
+                echo "DMG created: artifacts/${{ matrix.portable_name }}"
+              else
+                echo "hdiutil failed, falling back to zip"
+                (cd build/bin && zip -qr "../../artifacts/LdSSHManager-${{ matrix.label }}.zip" LdSSHManager.app)
+              fi
             fi
             ls -la artifacts
             exit 0
