@@ -38,7 +38,7 @@ jobs:
             out_installer_glob: ""
             portable_name: LdSSHManager-macos-arm64.dmg
             installer_name: ""
-          - os: macos-13
+          - os: macos-15-intel
             label: macos-intel
             build_platform: darwin/amd64
             extra_flags: ""
