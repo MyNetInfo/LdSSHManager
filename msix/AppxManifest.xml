@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+         IgnorableNamespaces="uap rescap">
+
+  <Identity Name="MyNetInfo.LdSSHManager"
+            Publisher="CN=79042E35-8A90-4330-8479-2CABF45ED289"
+            Version="0.8.47.0" />
+
+  <Properties>
+    <DisplayName>LdSSHManager</DisplayName>
+    <PublisherDisplayName>MyNetInfo</PublisherDisplayName>
+    <Logo>assets\StoreLogo.png</Logo>
+    <Description>一站式桌面 SSH 会话管理工具：会话树、多标签终端、快捷命令、SFTP、云端同步与数据加密</Description>
+  </Properties>
+
+  <Resources>
+    <Resource Language="zh-cn" />
+    <Resource Language="en-us" />
+  </Resources>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.26100.0" />
+  </Dependencies>
+
+  <Capabilities>
+    <!-- Win32 桌面应用需要完全信任运行 -->
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+
+  <Applications>
+    <Application Id="LdSSHManager"
+                 Executable="LdSSHManager.exe"
+                 EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements DisplayName="LdSSHManager"
+                          Square150x150Logo="assets\Square150x150Logo.png"
+                          Square44x44Logo="assets\Square44x44Logo.png"
+                          Description="一站式桌面 SSH 会话管理工具"
+                          BackgroundColor="transparent">
+        <uap:DefaultTile Square71x71Logo="assets\Square71x71Logo.png"
+                         Square310x310Logo="assets\Square310x310Logo.png"
+                         Wide310x150Logo="assets\Wide310x150Logo.png" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+
+</Package>
