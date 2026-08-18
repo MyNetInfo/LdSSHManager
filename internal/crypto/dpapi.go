@@ -1,3 +1,5 @@
+//go:build windows
+
 // Package crypto 提供本地敏感数据的加密原语。
 // 目前提供 Windows DPAPI 封装: 用"当前 Windows 用户"级密钥加密/解密,
 // 密钥由系统管理(不落盘、不导出), 换机器/换用户无法解密 ——
