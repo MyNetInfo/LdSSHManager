@@ -1,0 +1,12 @@
+{
+  "baseUrl": "https://api.gxlidang.com",
+  "endpoints": {
+    "vcode":      "/get/vcode",
+    "login":      "/auto/login",
+    "register":   "/auto/reg",
+    "configGet":  "/user/config/get",
+    "configSave": "/user/config/save",
+    "configDel":  "/user/config/del",
+    "configList": "/user/config/list"
+  }
+}

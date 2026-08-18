@@ -1,0 +1,596 @@
+/* ============================================================
+   LdSSHManager 全局样式: 主题变量体系 + 工具栏 + 通用控件
+   主题切换: document.documentElement.dataset.theme = light|dark
+   ============================================================ */
+
+/* ---------- 主题变量: 深色(默认, 对齐原 #0f141e 终端风格) ---------- */
+:root,
+[data-theme='dark'] {
+  --bg: #0f141e;            /* 主背景 */
+  --panel: #1b2636;         /* 面板背景(侧栏/内容区) */
+  --panel-2: #223045;       /* 面板头部/次级背景 */
+  --panel-3: #243447;       /* 激活标签背景 */
+  --hover: #24354a;         /* 悬停 */
+  --hover-2: #34496a;       /* 按钮悬停 */
+  --border: #2a3a4d;        /* 边框 */
+  --border-2: #3a4d65;      /* 深边框/输入框边框 */
+  --text: #d0d8e4;          /* 主文字 */
+  --text-2: #9fb0c7;        /* 次级文字 */
+  --text-3: #6c7d94;        /* 弱文字 */
+  --primary: #4f8cff;       /* 主色 */
+  --primary-hover: #3f7af0;
+  --danger: #ff7b7b;        /* 危险色 */
+  --danger-hover: #5a2a2a;
+  --danger-border: #ff7b7b;
+  --success: #56d4a0;       /* 成功/在线点 */
+  --warn: #f7c95c;          /* 文件夹图标等 */
+  --input-bg: #1b2636;
+  --input-text: #e8eef5;
+  --shadow: rgba(0, 0, 0, 0.4);
+  --scroll-track: #16202d;
+  --scroll-thumb: #3a4d65;
+  --topbar-height: 52px;
+}
+
+/* ---------- 主题变量: 浅色 ---------- */
+[data-theme='light'] {
+  --bg: #ffffff;
+  --panel: #ffffff;
+  --panel-2: #f1f2f4;
+  --panel-3: #e9ebef;
+  --hover: #f1f2f4;
+  --hover-2: #e4e8ed;
+  --border: #e4e7ed;
+  --border-2: #d0d4da;
+  --text: #303133;
+  --text-2: #606266;
+  --text-3: #909399;
+  --primary: #409eff;
+  --primary-hover: #66b1ff;
+  --danger: #f56c6c;
+  --danger-hover: #fde2e2;
+  --danger-border: #f56c6c;
+  --success: #67c23a;
+  --warn: #e6a23c;
+  --input-bg: #ffffff;
+  --input-text: #303133;
+  --shadow: rgba(0, 0, 0, 0.15);
+  --scroll-track: #f1f2f4;
+  --scroll-thumb: #c0c4cc;
+  --topbar-height: 52px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+body {
+  font-size: 15px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+
+#app {
+  width: 100%;
+}
+
+button {
+  font-family: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* ============================================================
+   顶部工具栏 (布局/顺序/图标 与 LdTools 一致)
+   左: [品牌] [导出数据] [导入数据] [⬆上传云端] [⬇下载云端]
+   右: [− +] [🔒锁屏] [☀浅色] [🌐Language] [👤账号] [访问官网]
+   ============================================================ */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--topbar-height);
+  padding: 0 16px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.brand-logo-img {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.brand-title {
+  margin: 0;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.brand-version {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text-2);
+  margin-left: 4px;
+}
+
+.topbar-cluster {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.topbar-left {
+  margin-left: 18px;
+}
+
+.topbar-grow {
+  flex: 1 1 auto;
+  min-width: 12px;
+}
+
+.topbar-btn {
+  padding: 6px 10px;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.topbar-btn:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+.topbar-btn-icon {
+  min-width: 30px;
+  padding: 4px 8px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.font-ctrl {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.font-ctrl .topbar-btn {
+  border-radius: 0;
+  border: 0;
+  padding: 4px 8px;
+  min-width: 26px;
+  font-weight: 600;
+  line-height: 1;
+}
+.font-ctrl .topbar-btn + .topbar-btn {
+  border-left: 1px solid var(--border);
+}
+
+/* 账号状态 (云端): 已登录显示昵称, 未登录显示"未登录" */
+.topbar-btn-account {
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.topbar-btn-account.is-logged-in {
+  color: var(--primary);
+}
+
+/* language dropdown */
+.lang-menu {
+  position: fixed;
+  z-index: 2000;
+  min-width: 140px;
+  padding: 6px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 8px 30px var(--shadow);
+}
+.lang-menu-item {
+  padding: 8px 12px;
+  color: var(--text);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.lang-menu-item:hover {
+  background: var(--hover);
+}
+
+/* ============================================================
+   锁屏遮罩
+   ============================================================ */
+.lock-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+}
+.lock-box {
+  width: 320px;
+  text-align: center;
+}
+.lock-logo {
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.lock-sub {
+  color: var(--text-2);
+  margin-bottom: 18px;
+}
+.lock-input {
+  width: 100%;
+  padding: 9px 12px;
+  color: var(--input-text);
+  background: var(--input-bg);
+  border: 1px solid var(--border-2);
+  border-radius: 6px;
+  outline: none;
+  margin-bottom: 10px;
+}
+.lock-input:focus {
+  border-color: var(--primary);
+}
+.lock-err {
+  min-height: 18px;
+  color: var(--danger);
+  margin-bottom: 6px;
+}
+.lock-btn {
+  width: 100%;
+  padding: 9px;
+  color: #fff;
+  background: var(--primary);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.lock-btn:hover {
+  background: var(--primary-hover);
+}
+.lock-manage {
+  display: inline-block;
+  margin-top: 14px;
+  color: var(--primary);
+  text-decoration: none;
+  cursor: pointer;
+}
+.lock-manage:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   通用弹窗 (登录/锁屏设置/云端同步)
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.modal-overlay.visible {
+  opacity: 1;
+}
+.modal-dialog {
+  width: 440px;
+  max-width: 92vw;
+  max-height: 86vh;
+  overflow-y: auto;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 12px 40px var(--shadow);
+  padding: 18px 20px;
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.modal-title {
+  margin: 0;
+  font-weight: 600;
+  color: var(--text);
+}
+.modal-close {
+  border: none;
+  background: transparent;
+  line-height: 1;
+  color: var(--text-3);
+  cursor: pointer;
+  padding: 2px 6px;
+}
+.modal-close:hover {
+  color: var(--text);
+}
+.modal-body {
+  margin-bottom: 14px;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* 表单 */
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.form-label {
+  width: 120px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  text-align: right;
+  color: var(--text-2);
+}
+.form-input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  color: var(--input-text);
+  background: var(--input-bg);
+  border: 1px solid var(--border-2);
+  border-radius: 6px;
+  outline: none;
+}
+.form-input:focus {
+  border-color: var(--primary);
+}
+.form-input.is-fixed {
+  flex: 0 0 auto;
+}
+.mask-pw {
+  -webkit-text-security: disc;
+}
+.dialog-desc {
+  margin: 0 0 12px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+.dialog-hint {
+  min-height: 18px;
+  margin: 0 0 10px;
+  color: var(--danger);
+}
+.dialog-hint .ext-link {
+  color: #4f9bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.dialog-hint .ext-link:hover {
+  color: #6ab2ff;
+}
+
+/* Topbar 账号头像 */
+.topbar-btn-account {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+}
+.topbar-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: rgba(255,255,255,0.08);
+  flex-shrink: 0;
+}
+.topbar-avatar-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+.topbar-account-name {
+  font-size: 12px;
+}
+
+/* 用户信息弹窗 */
+.account-modal-dialog .modal-body {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+.account-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+.account-avatar-lg {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: rgba(255,255,255,0.05);
+  margin-bottom: 6px;
+}
+.account-avatar-fallback-lg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-2);
+  border: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 6px;
+}
+.account-nick {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+.account-username {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-2);
+}
+.account-field {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text);
+}
+.account-intro {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.5;
+  max-width: 360px;
+  word-break: break-word;
+}
+.vcode-img {
+  width: 90px;
+  height: 34px;
+  border: 1px solid var(--border-2);
+  border-radius: 4px;
+  cursor: pointer;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.btn-icon {
+  border: 1px solid var(--border-2);
+  background: transparent;
+  color: var(--text-2);
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 6px 8px;
+}
+.btn-icon:hover {
+  background: var(--hover);
+}
+
+/* 按钮 */
+.btn {
+  padding: 7px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid var(--border-2);
+  background: transparent;
+  color: var(--text);
+  transition: background 0.15s, color 0.15s;
+}
+.btn-default:hover {
+  background: var(--hover);
+}
+.btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+.btn-danger {
+  background: transparent;
+  border-color: var(--danger-border);
+  color: var(--danger);
+}
+.btn-danger:hover {
+  background: var(--danger-hover);
+  border-color: var(--danger-border);
+  color: var(--danger);
+}
+.btn-small {
+  padding: 5px 12px;
+  color: var(--text-2);
+}
+
+/* 版本列表 */
+.dialog-list {
+  max-height: 320px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+.dialog-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 12px;
+  color: var(--text);
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+}
+.dialog-list-item:last-child {
+  border-bottom: none;
+}
+.dialog-list-item:hover {
+  background: var(--hover);
+}
+.dialog-list-time {
+  color: var(--text-3);
+}
+
+/* xterm.js 渲染优化: 抗锯齿 + 字距, 接近原生终端的清晰度(WebGL 渲染器在 WebView2 中效果显著) */
+.xterm,
+.xterm .xterm-screen,
+.xterm .xterm-viewport {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-variant-ligatures: contextual;
+  font-feature-settings: "calt" 1, "liga" 1;
+}
+.xterm-viewport::-webkit-scrollbar {
+  width: 8px;
+}
+.xterm-viewport::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
