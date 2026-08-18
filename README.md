@@ -12,7 +12,7 @@
 
 会话树 · 多标签终端 · 快捷命令 · SFTP · 云端同步 · Vault 加密，专为多主机运维与远程开发打造
 
-[![Platform](https://img.shields.io/badge/平台-Windows%2010%2F11%20x64-blue)](#)
+[![Platform](https://img.shields.io/badge/平台-Windows%2010%2F11%20x64%20%2B%20Linux%20%2B%20macOS-blue)](#)
 [![Version](https://img.shields.io/badge/版本-v0.8.46-green)](#)
 [![Wails](https://img.shields.io/badge/Wails-v2-9cf)](#)
 [![Vue](https://img.shields.io/badge/Vue-3-42b883)](#)
@@ -27,7 +27,7 @@
 
 ## 📖 项目简介
 
-**LdSSHManager** 是一款基于 **Wails v2 + Go + Vue 3** 的桌面 SSH 会话管理工具。它把多主机运维中最高频的能力——**会话分组与一键连接、xterm 高性能终端、常用命令快捷执行、远端文件浏览编辑、多端配置同步、数据加密保护**——整合进一个轻量、原生体验的 Windows 桌面应用，让你摆脱在终端 / PuTTY / WinSCP / 记事本之间来回切换的零碎体验。
+**LdSSHManager** 是一款基于 **Wails v2 + Go + Vue 3** 的跨平台桌面 SSH 会话管理工具（**Windows 10/11、Linux x64、macOS（Apple Silicon）**）。它把多主机运维中最高频的能力——**会话分组与一键连接、xterm 高性能终端、常用命令快捷执行、远端文件浏览编辑、多端配置同步、数据加密保护**——整合进一个轻量、原生体验的桌面应用，让你摆脱在终端 / PuTTY / WinSCP / 记事本之间来回切换的零碎体验。
 
 更重要的是，它从第一天起就坚持三个原则：
 
@@ -137,7 +137,7 @@
 
 | 层 | 选型 | 说明 |
 |---|---|---|
-| 桌面框架 | **Wails v2** | Go + Web，原生窗口 + WebView2 |
+| 桌面框架 | **Wails v2** | Go + Web，原生窗口（Windows: WebView2 / Linux: WebKit2GTK / macOS: WKWebView） |
 | 后端 | **Go 1.25+** | Wails 绑定、SSH 客户端（CGO 依赖 go-sqlcipher）、并发数据泵 |
 | 前端 | **Vue 3 (TypeScript) + Vite** | 组件化、类型安全 |
 | 终端 | **xterm.js + WebGL 渲染** | 高性能 TUI 渲染 |
@@ -159,15 +159,22 @@
 
 | 包 | 文件 | 适用场景 |
 |---|---|---|
-| 🟢 **绿色便携版** | `LdSSHManager-x64.exe` | 免安装，双击即用，适合临时使用 / U 盘携带 |
-| 📦 **NSIS 安装版** | `LdSSHManager-Install-x64.exe` | 标准 Windows 安装包，可自定义安装目录、桌面 / 开始菜单快捷方式、卸载 |
+| 🟢 **Windows 绿色便携版** | `LdSSHManager-x64.exe` | 免安装，双击即用，适合临时使用 / U 盘携带 |
+| 📦 **Windows NSIS 安装版** | `LdSSHManager-Install-x64.exe` | 标准 Windows 安装包，可自定义安装目录、桌面 / 开始菜单快捷方式、卸载 |
+| 🐧 **Linux 版** | `LdSSHManager-linux-x64` | 可执行文件（`chmod +x` 后直接运行），需 GTK3 / WebKit2GTK 桌面依赖 |
+| 🍎 **macOS 版** | `LdSSHManager-macos-arm64.dmg` | 磁盘镜像（Apple Silicon M 系列；未签名，首次需右键 → 打开） |
 
-> 下载后如提示"未知发布者"，点击"更多信息"→"仍要运行"即可（未购买商业代码签名证书，可从开源地址自行校验 / 构建）。
+> Windows 下载后如提示"未知发布者"，点击"更多信息"→"仍要运行"即可（未购买商业代码签名证书，可从开源地址自行校验 / 构建）。
+>
+> **自动构建**：推送代码到 GitHub `main` 分支后，GitHub Actions 会自动构建 **Windows（便携版 + 安装版）与 Linux** 产物并发布到仓库 [Releases](https://github.com/MyNetInfo/LdSSHManager/releases) 的 `latest`（每次 push 自动更新）。
 
 ### 系统要求
 
-- **操作系统**：Windows 10 / 11（x64）
-- **WebView2 Runtime**：Win11 已预装；Win10 使用**安装版**已内嵌，便携版首次启动按提示安装一次即可
+- **操作系统**：
+  - **Windows** 10 / 11（x64）
+  - **Linux** x64（需 GTK3、WebKit2GTK 4.1 等桌面依赖；主流发行版可 `sudo apt install libgtk-3-dev libwebkit2gtk-4.1-dev` 等）
+  - **macOS** Apple Silicon（M 系列芯片，macOS 12+；未签名，首次运行需右键 → 打开）
+- **WebView2 Runtime**：仅 Windows 需要——Win11 已预装；Win10 使用**安装版**已内嵌，便携版首次启动按提示安装一次即可
 - **屏幕分辨率**：建议 ≥ 1280×720
 
 ---
