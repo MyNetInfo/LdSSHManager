@@ -1,0 +1,87 @@
+name: Build LdSSHManager
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.5"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      # go-sqlcipher 是 CGO 驱动, 构建必须要有 gcc
+      - name: Install GCC (MSYS2 + MinGW-w64)
+        shell: pwsh
+        run: |
+          winget install --id MSYS2.MSYS2 -e --silent --accept-package-agreements --accept-source-agreements
+          & "C:\msys64\usr\bin\bash.exe" -lc "pacman -Sy --noconfirm --needed mingw-w64-ucrt-x86_64-gcc"
+          "C:\msys64\ucrt64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      # wails build -nsis 需要 makensis
+      - name: Install NSIS
+        shell: pwsh
+        run: |
+          winget install --id NSIS.NSIS -e --silent --accept-package-agreements --accept-source-agreements
+          "C:\Program Files (x86)\NSIS" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: Install Wails CLI
+        shell: pwsh
+        run: |
+          go install github.com/wailsapp/wails/v2/cmd/wails@v2.14.0
+          "$env:USERPROFILE\go\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      # 从 app.go 的 GetVersion() 动态读取版本号 (如 v0.8.46)
+      - name: Extract version from app.go
+        id: version
+        shell: pwsh
+        run: |
+          $m = Select-String -Path app.go -Pattern 'return "v([0-9]+\.[0-9]+\.[0-9]+)"' | Select-Object -First 1
+          $ver = $m.Matches[0].Groups[1].Value
+          "version=$ver" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          Write-Host "Detected version: $ver"
+
+      # wails 会自动执行前端 npm install + build, 无需单独步骤
+      - name: Build (portable + NSIS installer)
+        shell: pwsh
+        run: |
+          $env:CGO_ENABLED = "1"
+          wails build -platform windows/amd64 -nsis -webview2 embed
+
+      - name: Collect artifacts
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path artifacts | Out-Null
+          if (Test-Path "build\bin\LdSSHManager.exe") {
+            Copy-Item "build\bin\LdSSHManager.exe" "artifacts\LdSSHManager-x64.exe" -Force
+          }
+          Get-ChildItem "build\bin\*installer*.exe" -ErrorAction SilentlyContinue | ForEach-Object {
+            Copy-Item $_.FullName "artifacts\LdSSHManager-Install-x64.exe" -Force
+          }
+          Get-ChildItem artifacts | Select-Object Name, Length
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: LdSSHManager-v${{ steps.version.outputs.version }}
+          path: artifacts/
+
+      # 打 tag (v*) 时自动创建 GitHub Release 并挂上安装包
+      - name: Create GitHub Release (on tag v*)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: LdSSHManager v${{ steps.version.outputs.version }}
+          files: artifacts/*
