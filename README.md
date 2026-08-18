@@ -162,7 +162,8 @@
 | 🟢 **Windows 绿色便携版** | `LdSSHManager-x64.exe` | 免安装，双击即用，适合临时使用 / U 盘携带 |
 | 📦 **Windows NSIS 安装版** | `LdSSHManager-Install-x64.exe` | 标准 Windows 安装包，可自定义安装目录、桌面 / 开始菜单快捷方式、卸载 |
 | 🐧 **Linux 版** | `LdSSHManager-linux-x64` | 可执行文件（`chmod +x` 后直接运行），需 GTK3 / WebKit2GTK 桌面依赖 |
-| 🍎 **macOS 版** | `LdSSHManager-macos-arm64.dmg` | 磁盘镜像（Apple Silicon M 系列；未签名，首次需右键 → 打开） |
+| 🍎 **macOS 版（Apple Silicon）** | `LdSSHManager-macos-arm64.dmg` | 磁盘镜像（M 系列芯片；未签名，首次需右键 → 打开） |
+| 🍎 **macOS 版（Intel）** | `LdSSHManager-macos-x64.dmg` | 磁盘镜像（Intel Mac；未签名，首次需右键 → 打开） |
 
 > Windows 下载后如提示"未知发布者"，点击"更多信息"→"仍要运行"即可（未购买商业代码签名证书，可从开源地址自行校验 / 构建）。
 >
@@ -173,7 +174,7 @@
 - **操作系统**：
   - **Windows** 10 / 11（x64）
   - **Linux** x64（需 GTK3、WebKit2GTK 4.1 等桌面依赖；主流发行版可 `sudo apt install libgtk-3-dev libwebkit2gtk-4.1-dev` 等）
-  - **macOS** Apple Silicon（M 系列芯片，macOS 12+；未签名，首次运行需右键 → 打开）
+  - **macOS** Apple Silicon（M 系列，macOS 12+）与 Intel（macOS 12+）；未签名，首次运行需右键 → 打开
 - **WebView2 Runtime**：仅 Windows 需要——Win11 已预装；Win10 使用**安装版**已内嵌，便携版首次启动按提示安装一次即可
 - **屏幕分辨率**：建议 ≥ 1280×720
 

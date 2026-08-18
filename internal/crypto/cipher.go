@@ -124,3 +124,44 @@ func DecryptString(envelopeStr, password string) (string, error) {
 	}
 	return string(plain), nil
 }
+
+// SealWithKey 用 32 字节原始密钥做 AES-256-GCM 加密(每次随机 nonce),
+// 返回 "nonce+密文" 拼接后的 base64 字符串(可直接落盘)。
+// 与 EncryptString 的区别: 不经过密码派生, 密钥由调用方提供(如系统密钥环)。
+func SealWithKey(plain []byte, key []byte) (string, error) {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return "", err
+	}
+	gcm, err := cipher.NewGCM(block)
+	if err != nil {
+		return "", err
+	}
+	nonce := make([]byte, gcm.NonceSize())
+	if _, err := io.ReadFull(rand.Reader, nonce); err != nil {
+		return "", err
+	}
+	ct := gcm.Seal(nil, nonce, plain, nil)
+	return base64.StdEncoding.EncodeToString(append(nonce, ct...)), nil
+}
+
+// OpenWithKey 解密 SealWithKey 的输出; 密钥错误或数据被篡改都会返回 error
+// (AES-GCM 自带完整性校验)。
+func OpenWithKey(stored string, key []byte) ([]byte, error) {
+	raw, err := base64.StdEncoding.DecodeString(stored)
+	if err != nil {
+		return nil, errors.New("密钥环密文格式无效")
+	}
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+	gcm, err := cipher.NewGCM(block)
+	if err != nil {
+		return nil, err
+	}
+	if len(raw) < gcm.NonceSize() {
+		return nil, errors.New("密钥环密文格式无效")
+	}
+	return gcm.Open(nil, raw[:gcm.NonceSize()], raw[gcm.NonceSize():], nil)
+}

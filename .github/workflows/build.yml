@@ -38,6 +38,14 @@ jobs:
             out_installer_glob: ""
             portable_name: LdSSHManager-macos-arm64.dmg
             installer_name: ""
+          - os: macos-13
+            label: macos-intel
+            build_platform: darwin/amd64
+            extra_flags: -dmg
+            out_bin: ""
+            out_installer_glob: ""
+            portable_name: LdSSHManager-macos-x64.dmg
+            installer_name: ""
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
@@ -104,12 +112,12 @@ jobs:
         shell: bash
         run: |
           mkdir -p artifacts
-          # macOS: 优先 dmg, 兜底 zip 打包 .app
-          if [ "${{ matrix.label }}" == "macos" ]; then
+          # macOS: 优先 dmg, 兜底 zip 打包 .app (arm64 / intel 各自独立产物)
+          if [[ "${{ matrix.label }}" == macos* ]]; then
             if [ -f "build/bin/LdSSHManager.dmg" ]; then
               cp "build/bin/LdSSHManager.dmg" "artifacts/${{ matrix.portable_name }}"
             elif [ -d "build/bin/LdSSHManager.app" ]; then
-              (cd build/bin && zip -qr "../../artifacts/LdSSHManager-macos-arm64.zip" LdSSHManager.app)
+              (cd build/bin && zip -qr "../../artifacts/LdSSHManager-${{ matrix.label }}.zip" LdSSHManager.app)
             fi
             ls -la artifacts
             exit 0
@@ -177,7 +185,9 @@ jobs:
             - `LdSSHManager-linux-x64` 可执行文件（需桌面环境 + WebKit2GTK，见 README）
 
             **macOS**
-            - `LdSSHManager-macos-arm64.dmg` 磁盘镜像（Apple Silicon M 系列；首次打开需右键 → 打开，因未签名）
+            - `LdSSHManager-macos-arm64.dmg` 磁盘镜像（Apple Silicon M 系列）
+            - `LdSSHManager-macos-x64.dmg` 磁盘镜像（Intel Mac）
+            - 首次打开需右键 → 打开（未签名）
 
             官网：https://www.gxlidang.com/soft/ldsshmanager
           files: artifacts/*

@@ -162,7 +162,8 @@ The full source is public at <https://github.com/MyNetInfo/LdSSHManager>. You ca
 | 🟢 **Windows Portable** | `LdSSHManager-x64.exe` | No installation, double-click to run — great for ad-hoc use or USB drives |
 | 📦 **Windows NSIS Installer** | `LdSSHManager-Install-x64.exe` | Standard Windows installer: custom install dir, desktop/Start-menu shortcuts, uninstaller |
 | 🐧 **Linux build** | `LdSSHManager-linux-x64` | Executable (`chmod +x` then run); requires GTK3 / WebKit2GTK desktop deps |
-| 🍎 **macOS build** | `LdSSHManager-macos-arm64.dmg` | Disk image (Apple Silicon M-series; unsigned — first launch: right-click → Open) |
+| 🍎 **macOS (Apple Silicon)** | `LdSSHManager-macos-arm64.dmg` | Disk image (M-series; unsigned — first launch: right-click → Open) |
+| 🍎 **macOS (Intel)** | `LdSSHManager-macos-x64.dmg` | Disk image (Intel Mac; unsigned — first launch: right-click → Open) |
 
 > If Windows warns "Unknown publisher", click **More info** → **Run anyway** (no commercial code-signing certificate is in use; verify against the source or build it yourself).
 >
@@ -173,7 +174,7 @@ The full source is public at <https://github.com/MyNetInfo/LdSSHManager>. You ca
 - **OS**:
   - **Windows** 10 / 11 (x64)
   - **Linux** x64 (requires GTK3, WebKit2GTK 4.1 and other desktop deps; e.g. `sudo apt install libgtk-3-dev libwebkit2gtk-4.1-dev`)
-  - **macOS** Apple Silicon (M-series, macOS 12+; unsigned — first launch: right-click → Open)
+  - **macOS** Apple Silicon (M-series, macOS 12+) and Intel (macOS 12+); unsigned — first launch: right-click → Open
 - **WebView2 Runtime**: Windows only — pre-installed on Win11; the **installer** embeds it for Win10; the portable build prompts to install it once on first launch
 - **Screen resolution**: ≥ 1280×720 recommended
 
