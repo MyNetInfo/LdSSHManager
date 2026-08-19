@@ -98,7 +98,7 @@ func (a *App) Shutdown(ctx context.Context) {
 
 // GetVersion returns the application version.
 func (a *App) GetVersion() string {
-	return "v0.8.48"
+	return "v0.8.49"
 }
 
 // GetDataDir returns the configured binary data directory.
