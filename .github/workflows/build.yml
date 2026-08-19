@@ -165,21 +165,15 @@ jobs:
           path: artifacts
           merge-multiple: true
 
-      # 每次 push 都更新固定 "latest" Release
-      - name: Delete old latest release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        continue-on-error: true
-        shell: bash
-        run: gh release delete latest --yes --cleanup-tag
-
-      - name: Create latest Release
+      # 按版本号发布 Release (tag=vX.Y.Z), 历史版本全部保留
+      # 同一版本号重复 push 会更新该版本的 Release, 新版本号则新建 Release
+      - name: Create versioned Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: latest
-          name: LdSSHManager v${{ steps.version.outputs.version }} (latest)
+          tag_name: v${{ steps.version.outputs.version }}
+          name: LdSSHManager (v${{ steps.version.outputs.version }})
           body: |
-            最新自动构建 · v${{ steps.version.outputs.version }}
+            自动构建 · v${{ steps.version.outputs.version }}
 
             **Windows**
             - `LdSSHManager-x64.exe` 绿色便携版（免安装，双击运行）
