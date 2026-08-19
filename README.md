@@ -152,6 +152,7 @@
 
 | 渠道 | 地址 | 说明 |
 |---|---|---|
+| 🪟 **微软商店** | 微软商店搜索 **LdSSHManager** | **推荐**：商店自动签名，安装无安全警告 |
 | 🌐 **官网** | <https://www.gxlidang.com/soft/ldsshmanager> | 下载便携版 / 安装版 |
 | 🐙 **GitHub** | <https://github.com/MyNetInfo/LdSSHManager> | 源码、Issue、Releases |
 
@@ -165,9 +166,9 @@
 | 🍎 **macOS 版（Apple Silicon）** | `LdSSHManager-macos-arm64.dmg` | 磁盘镜像（M 系列芯片；未签名，首次需右键 → 打开） |
 | 🍎 **macOS 版（Intel）** | `LdSSHManager-macos-x64.dmg` | 磁盘镜像（Intel Mac；未签名，首次需右键 → 打开） |
 
-> Windows 下载后如提示"未知发布者"，点击"更多信息"→"仍要运行"即可（未购买商业代码签名证书，可从开源地址自行校验 / 构建）。
+> ⚠️ **Windows SmartScreen 提示说明**：GitHub / 官网下载的 exe 未购买商业代码签名证书，Windows 会提示"未知发布者 / 已保护你的电脑"——这是**未签名程序的正常提示**，并非病毒。处理方式：点击"更多信息"→"仍要运行"即可；也可从 [GitHub 源码](https://github.com/MyNetInfo/LdSSHManager) 自行审计 / 构建校验。**想完全免警告，请优先从微软商店安装**（商店自动签名）。
 >
-> **自动构建**：推送代码到 GitHub `main` 分支后，GitHub Actions 会自动构建 **Windows（便携版 + 安装版）与 Linux** 产物并发布到仓库 [Releases](https://github.com/MyNetInfo/LdSSHManager/releases) 的 `latest`（每次 push 自动更新）。
+> **自动构建**：推送代码到 GitHub `main` 分支后，GitHub Actions 会自动构建 **Windows（便携版 + 安装版）与 Linux / macOS** 产物，并按版本号（如 `v0.8.49`）发布到仓库 [Releases](https://github.com/MyNetInfo/LdSSHManager/releases)——**历史版本全部保留**。
 
 ### 系统要求
 

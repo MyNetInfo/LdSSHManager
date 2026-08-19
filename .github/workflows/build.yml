@@ -178,6 +178,7 @@ jobs:
             **Windows**
             - `LdSSHManager-x64.exe` 绿色便携版（免安装，双击运行）
             - `LdSSHManager-Install-x64.exe` NSIS 安装版（自定义安装目录/快捷方式/卸载）
+            - ⚠️ 提示"未知发布者/已保护你的电脑"属未签名程序的正常现象：点击"更多信息"→"仍要运行"；想免警告请从微软商店安装
 
             **Linux**
             - `LdSSHManager-linux-x64` 可执行文件（需桌面环境 + WebKit2GTK，见 README）

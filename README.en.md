@@ -152,6 +152,7 @@ The full source is public at <https://github.com/MyNetInfo/LdSSHManager>. You ca
 
 | Channel | Link | Notes |
 |---|---|---|
+| 🪟 **Microsoft Store** | Search "LdSSHManager" in Microsoft Store | **Recommended**: store-signed, no security warning on install |
 | 🌐 **Website** | <https://www.gxlidang.com/soft/ldsshmanager> | Download portable / installer builds |
 | 🐙 **GitHub** | <https://github.com/MyNetInfo/LdSSHManager> | Source code, Issues, Releases |
 
@@ -165,9 +166,9 @@ The full source is public at <https://github.com/MyNetInfo/LdSSHManager>. You ca
 | 🍎 **macOS (Apple Silicon)** | `LdSSHManager-macos-arm64.dmg` | Disk image (M-series; unsigned — first launch: right-click → Open) |
 | 🍎 **macOS (Intel)** | `LdSSHManager-macos-x64.dmg` | Disk image (Intel Mac; unsigned — first launch: right-click → Open) |
 
-> If Windows warns "Unknown publisher", click **More info** → **Run anyway** (no commercial code-signing certificate is in use; verify against the source or build it yourself).
+> ⚠️ **Windows SmartScreen notice**: EXEs downloaded from GitHub / the website are not code-signed, so Windows may show "Unknown publisher / Windows protected your PC". This is a **normal warning for unsigned programs**, not a virus. Click **More info** → **Run anyway** to proceed, or audit / build from the [source code](https://github.com/MyNetInfo/LdSSHManager). **To avoid the warning entirely, install from the Microsoft Store** (store-signed).
 >
-> **Auto build**: every push to the `main` branch triggers GitHub Actions to build **Windows (portable + installer) and Linux** and publish them to the `latest` release on [Releases](https://github.com/MyNetInfo/LdSSHManager/releases) (updated on every push).
+> **Auto build**: every push to `main` triggers GitHub Actions to build **Windows (portable + installer), Linux and macOS**, then publish them under versioned tags (e.g. `v0.8.49`) on [Releases](https://github.com/MyNetInfo/LdSSHManager/releases) — **all historical versions are kept**.
 
 ### System requirements
 
