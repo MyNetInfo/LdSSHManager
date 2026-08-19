@@ -8,6 +8,7 @@ import {
   DuplicateSavedSession,
   ConnectSSH,
   TrustHostKey,
+  ResetHostKey,
   PickFile,
   GetSetting,
   SetSetting,
@@ -102,6 +103,8 @@ onMounted(async () => {
   await tryRestore()
   // 导入数据 / 云端覆盖本地 后由 App 广播刷新
   window.addEventListener('ldsshmanager:refresh-sessions', loadSessions)
+  // 失败页"重置并重连": 复用原标签(id 不变)重新发起连接
+  window.addEventListener('ldsshmanager:reconnect-session', onReconnectSession)
   // 解锁成功(设了锁屏密码时启动为锁定态): 数据库刚打开, 重新加载并恢复上次会话
   offUnlocked = EventsOn('vault:unlocked', async () => {
     await loadSessions()
@@ -112,8 +115,28 @@ onMounted(async () => {
 // cleanup 在组件卸载时移除事件监听
 onBeforeUnmount(() => {
   window.removeEventListener('ldsshmanager:refresh-sessions', loadSessions)
+  window.removeEventListener('ldsshmanager:reconnect-session', onReconnectSession)
   offUnlocked?.()
 })
+
+// onReconnectSession 由 App 在"重置并重连"后广播: 按保存会话 id 找到配置,
+// 用原标签 tempId 重新连接(不新开标签, connected 事件会替换该标签内容)。
+async function onReconnectSession(e: Event) {
+  const d = (e as CustomEvent).detail
+  if (!d || !d.sessionId || !d.tempId) return
+  const s = findSavedSession(d.sessionId)
+  if (!s) return
+  await runConnect(s, d.tempId, 80, 24)
+}
+
+// findSavedSession 按保存会话 id 在分组树中查找配置。
+function findSavedSession(id: number): SavedSession | null {
+  for (const g of state.groups) {
+    const hit = g.sessions.find((x) => x.id === id)
+    if (hit) return hit
+  }
+  return null
+}
 
 async function loadSessions() {
   let list
@@ -412,6 +435,27 @@ async function duplicateSaved(s: SavedSession) {
   }
 }
 
+// resetHostKey 清除该主机的 known_hosts 记录(远端重装/换密钥后使用),
+// 清除后立即重新连接 → 走"未知主机"指纹确认流程(不绕过安全确认)。
+async function resetHostKey(s: SavedSession) {
+  closeContextMenu()
+  const ok = await showConfirm(
+    t('重置主机密钥 "{host}"？\n将删除已保存的主机密钥记录，下次连接将重新确认指纹。', {host: s.host}),
+    t('重置主机密钥'),
+    t('重置'),
+    t('取消'),
+  )
+  if (!ok) return
+  try {
+    await ResetHostKey(s.host)
+  } catch (err: any) {
+    await showToast(String(err), t('操作失败'), 5000, 'error')
+    return
+  }
+  await showToast(t('已重置主机密钥'), t('提示'), 3000, 'success')
+  await connectSession(s)
+}
+
 async function removeSession(s: SavedSession) {
   closeContextMenu()
   const ok = await showConfirm(t('删除会话 "{name}"？', {name: s.name}), t('确认'), t('删除'), t('取消'))
@@ -540,6 +584,7 @@ function isActive(s: SavedSession): boolean {
     >
       <div class="context-item" @click="openEdit(contextMenu.session!)">{{ t('编辑会话') }}</div>
       <div class="context-item" @click="duplicateSaved(contextMenu.session!)">{{ t('复制会话') }}</div>
+      <div class="context-item" @click="resetHostKey(contextMenu.session!)">{{ t('重置主机密钥') }}</div>
       <div class="context-item context-danger" @click="removeSession(contextMenu.session!)">{{ t('删除会话') }}</div>
     </div>
   </aside>

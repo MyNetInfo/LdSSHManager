@@ -19,10 +19,14 @@ const props = defineProps<{
   status: SessionStatus
   error?: string
   host?: string
+  // 所属保存会话 id(失败页"重置并重连"需要, 用于按 id 重新发起连接)
+  savedSessionId?: number
 }>()
 
 const emit = defineEmits<{
   (e: 'input', data: string): void
+  // 用户点击失败页"重置并重连": 清除 known_hosts 后复用当前标签重新连接
+  (e: 'reset-host-key'): void
 }>()
 
 const containerRef = ref<HTMLDivElement | null>(null)
@@ -397,6 +401,10 @@ onUnmounted(() => {
     <div v-else-if="props.status === 'failed'" class="term-status term-status--error">
       <div class="term-error-title">{{ t('连接失败') }}</div>
       <div class="term-error-msg">{{ props.error }}</div>
+      <!-- 主机密钥变更/连接异常时: 重置 known_hosts 后复用本标签重连 -->
+      <button v-if="props.host && props.savedSessionId" class="term-reset-btn" @click="emit('reset-host-key')">
+        {{ t('重置并重连') }}
+      </button>
     </div>
     <!-- status === 'active': containerRef 由 xterm 填充 -->
     <div v-if="debugShow && props.status === 'active'" class="term-debug" :title="t('调试信息')">{{ debugInfo }}</div>
@@ -435,6 +443,21 @@ onUnmounted(() => {
   max-width: 80%;
   text-align: center;
   word-break: break-all;
+}
+.term-reset-btn {
+  margin-top: 4px;
+  padding: 6px 16px;
+  border: 1px solid var(--border-2);
+  border-radius: 4px;
+  background: var(--panel-2);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 13px;
+}
+.term-reset-btn:hover {
+  background: var(--hover);
+  border-color: var(--primary);
+  color: var(--primary);
 }
 .term-spinner {
   width: 22px;

@@ -17,6 +17,7 @@ const emit = defineEmits<{
   (e: 'close', id: string): void
   (e: 'reorder', payload: {fromId: string; toId: string}): void
   (e: 'duplicate', id: string): void
+  (e: 'reset-host-key', payload: {tempId: string; savedId: number; host: string}): void
 }>()
 
 const displaySessions = computed(() => {
@@ -53,6 +54,11 @@ function onDrop(e: DragEvent, targetId: string) {
 function duplicateTab(id: string) {
   emit('duplicate', id)
 }
+
+// 失败页"重置并重连": 带上当前标签 id + 保存会话 id + 主机, 交给上层处理
+function onResetHostKey(s: ActiveSession) {
+  emit('reset-host-key', {tempId: s.id, savedId: s.sessionId, host: s.host})
+}
 </script>
 
 <template>
@@ -85,6 +91,8 @@ function duplicateTab(id: string) {
             :status="s.status"
             :error="s.error"
             :host="s.host"
+            :saved-session-id="s.sessionId"
+            @reset-host-key="onResetHostKey(s)"
           />
         </template>
         <div v-if="props.sessions.length === 0" class="empty-term">

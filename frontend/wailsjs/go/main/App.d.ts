@@ -64,6 +64,8 @@ export function PickSavePath(arg1:string):Promise<string>;
 
 export function ReorderQuickCommands(arg1:Array<number>):Promise<void>;
 
+export function ResetHostKey(arg1:string):Promise<void>;
+
 export function SFTPDelete(arg1:string,arg2:string):Promise<void>;
 
 export function SFTPDownload(arg1:string,arg2:string,arg3:string):Promise<void>;

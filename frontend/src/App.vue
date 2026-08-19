@@ -9,7 +9,7 @@ import VaultModal from './components/VaultModal.vue'
 import QuickCommandBar from './components/QuickCommandBar.vue'
 import QuickCommandPanel from './components/QuickCommandPanel.vue'
 import Dialog from './components/Dialog.vue'
-import {DuplicateSSH, DisconnectSSH, GetSetting, SetSetting} from '../wailsjs/go/main/App'
+import {DuplicateSSH, DisconnectSSH, GetSetting, SetSetting, ResetHostKey} from '../wailsjs/go/main/App'
 import {showToast} from './dialog'
 import {t} from './i18n'
 import {EventsOn} from '../wailsjs/runtime/runtime'
@@ -234,6 +234,27 @@ async function onDuplicate(id: string) {
   }
 }
 
+// 失败页"重置并重连": 清除该主机 known_hosts 记录 → 标签切回 connecting →
+// 广播事件让会话树复用原标签重新连接(走"未知主机"指纹确认流程)。
+async function onResetHostKey(payload: {tempId: string; savedId: number; host: string}) {
+  try {
+    await ResetHostKey(payload.host)
+  } catch (err: any) {
+    showToast(String(err), t('操作失败'), 5000, 'error')
+    return
+  }
+  const idx = state.sessions.findIndex((s) => s.id === payload.tempId)
+  if (idx >= 0) {
+    state.sessions[idx] = {...state.sessions[idx], status: 'connecting', error: undefined}
+  }
+  showToast(t('已重置主机密钥'), t('提示'), 3000, 'success')
+  window.dispatchEvent(
+    new CustomEvent('ldsshmanager:reconnect-session', {
+      detail: {sessionId: payload.savedId, tempId: payload.tempId},
+    })
+  )
+}
+
 function startResizeLeft(e: MouseEvent) {
   e.preventDefault()
   resizing.left = true
@@ -308,6 +329,7 @@ function refreshSessions() {
         @close="onClose"
         @reorder="onReorder"
         @duplicate="onDuplicate"
+        @reset-host-key="onResetHostKey"
       />
       <div class="divider" @mousedown="startResizeRight"></div>
       <FileManager

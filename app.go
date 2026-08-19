@@ -366,6 +366,14 @@ func (a *App) TrustHostKey(host, keyType, blob string) error {
 	return store.AddKnownHost(host, keyType, blob)
 }
 
+// ResetHostKey 删除指定主机的全部已信任密钥记录(known_hosts)。
+// 场景: 远端主机重装系统后密钥已更换, 连接被"密钥已变更"防护阻止;
+// 用户确认该主机无误后调用本方法重置本地记录, 下次连接回到"未知主机"
+// 指纹确认流程(仍不绕过安全确认)。
+func (a *App) ResetHostKey(host string) error {
+	return store.DeleteKnownHost(host)
+}
+
 // DuplicateSSH creates a new active session using the same options as an existing one.
 func (a *App) DuplicateSSH(id string) (ConnectResult, error) {
 	var empty ConnectResult

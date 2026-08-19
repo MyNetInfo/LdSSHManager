@@ -63,3 +63,16 @@ func AddKnownHost(host, keyType, blob string) error {
 	}
 	return nil
 }
+
+// DeleteKnownHost 删除指定 host 的全部已信任密钥记录(known_hosts)。
+// 场景: 远端主机重装系统/更换密钥后, 用户确认无误后重置本地记录,
+// 下次连接该主机将回到"未知主机"流程, 由用户重新确认指纹。
+func DeleteKnownHost(host string) error {
+	if db == nil {
+		return fmt.Errorf("database not open")
+	}
+	if _, err := db.Exec(`DELETE FROM known_hosts WHERE host = ?`, host); err != nil {
+		return fmt.Errorf("delete known host: %w", err)
+	}
+	return nil
+}

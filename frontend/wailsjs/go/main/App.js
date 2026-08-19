@@ -122,6 +122,10 @@ export function ReorderQuickCommands(arg1) {
   return window['go']['main']['App']['ReorderQuickCommands'](arg1);
 }
 
+export function ResetHostKey(arg1) {
+  return window['go']['main']['App']['ResetHostKey'](arg1);
+}
+
 export function SFTPDelete(arg1, arg2) {
   return window['go']['main']['App']['SFTPDelete'](arg1, arg2);
 }
