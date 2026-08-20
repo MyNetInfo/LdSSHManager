@@ -8,12 +8,13 @@
 **Open source · Customizable · Your data, encrypted & protected — an all-in-one desktop SSH session manager**
 
 **🔗 Source code**: https://github.com/MyNetInfo/LdSSHManager  
-**🌐 Website (download)**: https://www.gxlidang.com/soft/ldsshmanager
+**🌐 Website (download)**: https://www.gxlidang.com/soft/ldsshmanager  
+**📧 Contact**: sbpfikdm@gmail.com
 
 Session tree · Multi-tab terminal · Quick commands · SFTP · Cloud sync · Vault encryption, built for multi-host ops and remote development
 
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%2F11%20x64%20%2B%20Linux%20%2B%20macOS-blue)](#)
-[![Version](https://img.shields.io/badge/Version-v0.8.46-green)](#)
+[![Version](https://img.shields.io/badge/Version-v0.8.49-green)](#)
 [![Wails](https://img.shields.io/badge/Wails-v2-9cf)](#)
 [![Vue](https://img.shields.io/badge/Vue-3-42b883)](#)
 [![Go](https://img.shields.io/badge/Go-1.25+-00ADD8)](#)
@@ -37,7 +38,7 @@ From day one it is built on three principles:
 
 - Source code: <https://github.com/MyNetInfo/LdSSHManager>
 - Website (download): <https://www.gxlidang.com/soft/ldsshmanager>
-- Current version: **v0.8.46**
+- Current version: **v0.8.49**
 
 ---
 

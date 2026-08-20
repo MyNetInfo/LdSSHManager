@@ -8,12 +8,13 @@
 **开源 · 可定制 · 数据加密有保障 —— 一站式桌面 SSH 会话管理工具**
 
 **🔗 开源地址**: https://github.com/MyNetInfo/LdSSHManager  
-**🌐 官网地址（下载）**: https://www.gxlidang.com/soft/ldsshmanager
+**🌐 官网地址（下载）**: https://www.gxlidang.com/soft/ldsshmanager  
+**📧 联系邮箱**: sbpfikdm@gmail.com
 
 会话树 · 多标签终端 · 快捷命令 · SFTP · 云端同步 · Vault 加密，专为多主机运维与远程开发打造
 
 [![Platform](https://img.shields.io/badge/平台-Windows%2010%2F11%20x64%20%2B%20Linux%20%2B%20macOS-blue)](#)
-[![Version](https://img.shields.io/badge/版本-v0.8.46-green)](#)
+[![Version](https://img.shields.io/badge/版本-v0.8.49-green)](#)
 [![Wails](https://img.shields.io/badge/Wails-v2-9cf)](#)
 [![Vue](https://img.shields.io/badge/Vue-3-42b883)](#)
 [![Go](https://img.shields.io/badge/Go-1.25+-00ADD8)](#)
@@ -37,7 +38,7 @@
 
 - 开源地址：<https://github.com/MyNetInfo/LdSSHManager>
 - 官网（下载）：<https://www.gxlidang.com/soft/ldsshmanager>
-- 当前版本：**v0.8.46**
+- 当前版本：**v0.8.49**
 
 ---
 
